@@ -39,8 +39,7 @@ def matrix_by_matrix_multiplying(macierz1, macierz2):
     if macierz1.cols != macierz2.rows:
         raise ValueError(
             "Liczba kolumn pierwszej macierzy musi być równa liczbie wierszy drugiej macierzy, "
-            "aby można je było mnożyć."
-        ) 
+            "aby można je było mnożyć.") 
 
     return macierz1 * macierz2
 
@@ -188,5 +187,10 @@ def has_complex_eigenvalues(macierz):
         raise ValueError("Macierz musi być kwadratowa, aby można było sprawdzić, czy ma wartości własne zespolone.")
 
     eigenvalues = matrix_eigenvalues(macierz)
-    return any(ev.is_complex for ev in eigenvalues)
 
+    for eigenvalue in eigenvalues.keys():
+        real_part, imagine_part = eigenvalue.as_real_imag()
+        if imagine_part != 0:
+            return True
+
+    return False
