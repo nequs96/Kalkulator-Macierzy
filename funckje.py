@@ -1,7 +1,7 @@
 from sympy import Matrix
 
 
-def matrix(data):
+def create_matrix(data):
     """
     Zamienia podany obiekt (listę) na macierz używając biblioteki sympy.
     """
@@ -93,7 +93,7 @@ def matrix_determinant(macierz):
 
     return macierz.det()
 
-def matrix_track(macierz):
+def matrix_trace(macierz):
     """
     Zwraca ślad macierzy, jeżeli jest kwadratowa.
     W przeciwnym razie zgłasza błąd.
@@ -103,6 +103,38 @@ def matrix_track(macierz):
         raise ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej ślad.")
 
     return macierz.trace()
+
+def is_square_matrix(macierz):
+    """
+    Sprawdza, czy macierz jest kwadratowa.
+    """
+
+    return macierz.rows == macierz.cols
+
+def is_invertible_matrix(macierz):
+    """
+    Sprawdza, czy macierz jest odwracalna.
+    """
+
+    if not is_square_matrix(macierz):
+        raise ValueError("Macierz musi być kwadratowa, aby można było sprawdzić jej odwracalność.")
+    
+    if matrix_determinant(macierz) == 0:
+        return False
+    
+    return True
+
+def is_diagonalizable_matrix(macierz):
+    """
+    Sprawdza, czy macierz jest diagonalizowalna (korzystająć z funkcji is_diagonalizable() z biblioteki sympy).
+    """
+
+    if not is_square_matrix(macierz):
+        raise ValueError("Macierz musi być kwadratowa, aby można było sprawdzić jej diagonalizowalność.")
+    
+    return macierz.is_diagonalizable()
+
+
 
 
 # 3. macierz_odwrotna(macierz)
@@ -114,13 +146,8 @@ def matrix_track(macierz):
 # 6. diagonalizacja_macierzy(macierz)
 
 
-# 8. slad_macierzy(macierz)
-
-# 9. sprawdz_czy_kwadratowa(macierz)
-
 # 10. sprawdz_czy_odwracalna(macierz)
 
-# 11. sprawdz_czy_diagonalizowalna(macierz)
 
 # 12. zamiana_macierzy_na_tekst(macierz)
 
