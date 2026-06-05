@@ -134,42 +134,59 @@ def is_diagonalizable_matrix(macierz):
     
     return macierz.is_diagonalizable()
 
+def matrix_inverse(macierz):
+    """
+    Zwraca macierz odwrotną, jeżeli macierz jest odwracalna.
+    W przeciwnym razie zgłasza błąd.
+    """
 
+    if not is_invertible_matrix(macierz):
+        raise ValueError("Macierz nie jest odwracalna, więc nie można obliczyć jej odwrotności.")
 
+    return macierz.inv()
 
-# 3. macierz_odwrotna(macierz)
+def matrix_eigenvalues(macierz):
+    """
+    Zwraca wartości własne macierzy, jeżeli jest kwadratowa wraz z ich algebraiczną krotnością.
+    W przeciwnym razie zgłasza błąd.
+    """
 
-# 4. wartosci_wlasne(macierz)
+    if not is_square_matrix(macierz):
+        raise ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej wartości własne.")
 
-# 5. wektory_wlasne(macierz)
+    return macierz.eigenvals()
 
-# 6. diagonalizacja_macierzy(macierz)
+def matrix_eigenvectors(macierz):
+    """
+    Zwraca wektory własne macierzy, jeżeli jest kwadratowa wraz z ich geometryczną krotnością.
+    W przeciwnym razie zgłasza błąd.
+    """
 
+    if not is_square_matrix(macierz):
+        raise ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej wektory własne.")
 
-# 10. sprawdz_czy_odwracalna(macierz)
+    return macierz.eigenvects()
 
+def matrix_diagonalization(macierz):
+    """
+    Zwraca diagonalizację macierzy, jeżeli jest diagonalizowalna.
+    W przeciwnym razie zgłasza błąd.
+    """
 
-# 12. zamiana_macierzy_na_tekst(macierz)
+    if not is_diagonalizable_matrix(macierz):
+        raise ValueError("Macierz nie jest diagonalizowalna, więc nie można obliczyć jej diagonalizacji.")
 
-# 13. zapisz_macierz_do_pliku(macierz, nazwa_pliku)
+    return macierz.diagonalize()
 
-# 14. wczytaj_macierz_z_pliku(nazwa_pliku)
+def has_complex_eigenvalues(macierz):
+    """
+    Sprawdza, czy macierz ma wartości własne zespolone, jeżeli jest kwadratowa.
+    W przeciwnym razie zgłasza błąd.
+    """
 
-if __name__ == "__main__":
-    macierz1_data = [[1, 2], [3, 4]]
-    macierz2_data = [[5, 6], [7, 8]]
+    if not is_square_matrix(macierz):
+        raise ValueError("Macierz musi być kwadratowa, aby można było sprawdzić, czy ma wartości własne zespolone.")
 
-    macierz1 = matrix(macierz1_data)
-    macierz2 = matrix(macierz2_data)
+    eigenvalues = matrix_eigenvalues(macierz)
+    return any(ev.is_complex for ev in eigenvalues)
 
-    print("Macierz 1:")
-    print(macierz1)
-
-    print("Macierz 2:")
-    print(macierz2)
-
-    print("Dodawanie:")
-    print(matrix_addition(macierz1, macierz2))
-
-    print("Mnożenie:")
-    print(matrix_by_matrix_multiplying(macierz1, macierz2))
