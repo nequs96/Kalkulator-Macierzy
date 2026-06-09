@@ -6,8 +6,6 @@ from PySide6.QtCore import Qt
 from gui.input_box import InputBox
 from gui.result_view import ResultView
 
-
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
