@@ -3,6 +3,8 @@ from PySide6.QtWidgets import (
     QPushButton, QTextEdit )
 from PySide6.QtCore import Qt
 
+from core.command_dispatcher import execute_command
+from core.matrix_operations import format_for_gui
 from gui.input_box import InputBox
 from gui.result_view import ResultView
 
@@ -39,7 +41,7 @@ class MainWindow(QMainWindow):
         
         #to do zastapienia
         raw = execute_command(command)
-        formatted = format_result(raw)
+        formatted = format_for_gui(raw)
         
         self.result_section.result_display.setText(formatted)
 
