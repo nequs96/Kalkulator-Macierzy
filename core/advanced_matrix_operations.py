@@ -1,19 +1,7 @@
 from sympy import Matrix
 
-def create_matrix(data):
-    """
-    Zamienia podany obiekt (listę) na macierz używając biblioteki sympy.
-    """
-    return Matrix(data)
+from core.basic_matrix_operations import create_matrix, is_square_matrix
 
-def is_square_matrix(macierz):
-    """
-    Sprawdza, czy macierz jest kwadratowa.
-    """
-
-    return macierz.rows == macierz.cols
-
-    
 def check_square(macierz, function_name):
     """
     Sprawdza, czy macierz jest kwadratowa w kontekście zadanej funkcji.
