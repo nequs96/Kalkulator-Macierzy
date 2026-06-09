@@ -189,8 +189,8 @@ def has_complex_eigenvalues(macierz):
     eigenvalues = matrix_eigenvalues(macierz)
 
     for eigenvalue in eigenvalues.keys():
-        real_part, imagine_part = eigenvalue.as_real_imag()
-        if imagine_part != 0:
+        real_part, imaginary_part = eigenvalue.as_real_imag()
+        if imaginary_part != 0:
             return True
 
     return False
