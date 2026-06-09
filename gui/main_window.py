@@ -3,7 +3,10 @@ from PySide6.QtWidgets import (
     QPushButton, QTextEdit )
 from PySide6.QtCore import Qt
 
-import sys
+from gui.input_box import InputBox
+from gui.result_view import ResultView
+
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -13,48 +16,36 @@ class MainWindow(QMainWindow):
         self.resize(600, 500)
 
         widget = QWidget()
+        layout = QVBoxLayout(widget)
 
         label1 = QLabel("Kalkulator Macierzy")
         label1.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
-
-
-        layout = QVBoxLayout()
         layout.addWidget(label1)
-        widget.setLayout(layout)
 
-        examples = QLabel("""
-                          det (wyznacznik) 
-                          add (dodawanie) 
-                          tr (slad)""")
-        layout.addWidget(examples)
-        examples.setAlignment(Qt.AlignLeft)
+        self.input_section = InputBox()
+        self.result_section = ResultView()
 
-        button1 = QPushButton("oblicz")
-        layout.addWidget(button1)
-
-        button2 = QPushButton("wyczysc")
-        layout.addWidget(button2)
-
-        self.inputbox = QLineEdit()
-        self.inputbox.setPlaceholderText("Wpisz komende np det[(1,2),(3,4)]")
-        layout.addWidget(self.inputbox)
-
-        result = QLabel("Wynik: ")
-        result.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-        layout.addWidget(result)
-
-        self.result_label = QLabel("")
-        layout.addWidget(self.result_label)
-        
-
+        layout.addWidget(self.input_section)
+        layout.addWidget(self.result_section)
 
         self.setCentralWidget(widget)
 
-app = QApplication()
+        self.input_section.button1.clicked.connect(self.handle_calculate)
+        self.input_section.button2.clicked.connect(self.handle_clear)
 
-window = MainWindow()
-window.show()
+    def handle_calculate(self):
+        command = self.input_section.inputbox.text()
+        
+        if not command.strip():
+            return
+        
+        #to do zastapienia
+        raw = execute_command(command)
+        formatted = format_result(raw)
+        
+        self.result_section.result_display.setText(formatted)
 
-app.exec()
-
+    def handle_clear(self):
+        self.input_section.inputbox.clear()
+        self.result_section.result_display.clear()
 
