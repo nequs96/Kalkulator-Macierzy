@@ -1,5 +1,5 @@
 from core.parser import CommandParser, ParsedCommand
-import core.matrix_operations as basic_operations
+import core.basic_matrix_operations as basic_operations
 import core.advanced_matrix_operations as advanced_operations
 
 

@@ -1,6 +1,6 @@
 from sympy import Matrix
 
-from core.matrix_operations import create_matrix, is_square_matrix
+from core.basic_matrix_operations import create_matrix, is_square_matrix
 
 def check_square(macierz, function_name):
     """
