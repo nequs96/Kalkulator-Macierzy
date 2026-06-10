@@ -108,6 +108,6 @@ def matrix_trace(macierz):
     """
 
     if not is_square_matrix(macierz):
-        raise ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej ślad.")
+        return ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej ślad.")
 
     return macierz.trace()
