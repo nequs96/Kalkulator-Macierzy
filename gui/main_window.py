@@ -39,7 +39,6 @@ class MainWindow(QMainWindow):
         if not command.strip():
             return
         
-        #to do zastapienia
         raw = execute_command(command)
         formatted = format_for_gui(raw)
         
