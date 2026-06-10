@@ -97,7 +97,7 @@ def matrix_determinant(macierz):
     """
 
     if not is_square_matrix(macierz):
-        raise ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej wyznacznik.")
+        return ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej wyznacznik.")
 
     return macierz.det()
 
@@ -111,31 +111,3 @@ def matrix_trace(macierz):
         raise ValueError("Macierz musi być kwadratowa, aby można było obliczyć jej ślad.")
 
     return macierz.trace()
-
-
-def format_for_gui(result):
-    """
-    Formatuje wynik macierzowych operacji do formatu odpowiedniego dla GUI.
-    """
-    try:
-        if isinstance(result, Basic):
-            return str(result)
-    except ImportError:
-        pass
-
-    if isinstance(result, Matrix): #zamienia macierz na listę list
-        return result.tolist()
-
-    elif isinstance(result, dict): #przerabia słowniki 
-        return {str(key): format_for_gui(value) for key, value in result.items()}
-
-    elif isinstance(result, list): #tworzy liste i "formatuje jej elementy"
-        return [format_for_gui(item) for item in result]
-
-    elif isinstance(result, tuple): #krotki traktuje jak listy
-        return [format_for_gui(item) for item in result]
-
-    elif isinstance(result, set): #zbiory traktuje jak listy, ale dodatkowo sortuje, żeby były w ustalonej kolejności
-        return [format_for_gui(item) for item in sorted(result, key=str)]
-    
-    return str(result) #wszystko inne zamieniamy na string
