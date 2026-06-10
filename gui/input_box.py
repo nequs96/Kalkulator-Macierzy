@@ -15,7 +15,7 @@ class InputBox(QWidget):
         layout.addWidget(self.examples)
 
         self.inputbox = QLineEdit()
-        self.inputbox.setPlaceholderText("Wpisz komende np det[[1,2],[3,4]]")
+        self.inputbox.setPlaceholderText("Wpisz komende np det([1,2],[3,4])")
         layout.addWidget(self.inputbox)
 
         buttons_layout = QHBoxLayout()
