@@ -42,7 +42,7 @@ class MainWindow(QMainWindow):
             return
         
         raw = execute_command(command)
-        formatted = format_for_gui(raw)
+        formatted = format_result(raw)
         
         self.result_section.result_display.setText(formatted)
 
