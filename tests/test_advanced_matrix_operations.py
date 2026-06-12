@@ -33,8 +33,10 @@ def test_inverse_matrix_invertible():
                                                                [Rational(-1, 10), Rational(2, 5)]])
 
 def test_inverse_matrix_non_invertible():
-    with pytest.raises(ValueError):
-        inverse_matrix(non_invertible_matrix)
+    result = inverse_matrix(non_invertible_matrix)
+
+    assert isinstance(result, ValueError)
+    assert str(result) == "Macierz nie jest odwracalna."
 
 def test_eigenvalues_of_diagonal_matrix():
     assert matrix_eigenvalues(diagonal_matrix) == {5: 1, 3: 1}
@@ -57,8 +59,10 @@ def test_diagonalize_diagonalizable_matrix():
     assert results["P"] * results["D"] * results["P_inverse"] == diagonalizable_matrix
 
 def test_diagonalize_nondiagonalizable_matrix():
-    with pytest.raises(ValueError):
-        diagonalize_matrix(non_diagonalizable_matrix)
+    result = diagonalize_matrix(non_diagonalizable_matrix)
+
+    assert isinstance(result, ValueError)
+    assert str(result) == "Macierz nie jest diagonalizowalna."
 
 def test_has_complex_eigenvalues():
     assert has_complex_eigenvalues(complex_diagonal_matrix) == True
