@@ -8,7 +8,7 @@ def check_square(macierz, function_name):
     """
 
     if not is_square_matrix(macierz):
-        raise ValueError(f"Funkcja {function_name} wymaga macierzy kwadratowej.")
+        return ValueError(f"Funkcja {function_name} wymaga macierzy kwadratowej.")
     
     return True
 
@@ -37,7 +37,7 @@ def inverse_matrix(macierz):
     check_square(macierz, "odwracanie macierzy")
     
     if not is_invertible_matrix(macierz):
-        raise ValueError("Macierz nie jest odwracalna.")
+        return ValueError("Macierz nie jest odwracalna.")
     
     return macierz.inv()
 
@@ -100,7 +100,7 @@ def diagonalize_matrix(macierz):
     check_square(macierz, "diagonalizacja macierzy")
 
     if not is_diagonalizable(macierz):
-        raise ValueError("Macierz nie jest diagonalizowalna.")
+        return ValueError("Macierz nie jest diagonalizowalna.")
     
     P, D = macierz.diagonalize()
     P_inverse = P.inv()
