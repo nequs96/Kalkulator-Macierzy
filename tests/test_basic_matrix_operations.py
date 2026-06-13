@@ -7,9 +7,7 @@ from core.basic_matrix_operations import (  create_matrix,
                                             matrix_subtraction,
                                             matrix_by_matrix_multiplying,
                                             scalar_multiplying,
-                                            transponent_matrix,
                                             matrix_exponentiation,
-                                            matrix_rank,
                                             matrix_determinant,
                                             matrix_trace
                                         )
@@ -57,11 +55,6 @@ def test_scalar_multiplying():
     print("a * 2 =", scalar_multiplying(a, 2))
     print("b * 2 =", scalar_multiplying(b, 2))
 
-def test_transponent_matrix():
-    print("\n--- Test funkcji transponent_matrix - transponowanie macierzy ---")
-    print("a^T =", transponent_matrix(a))
-    print("b^T =", transponent_matrix(b))
-
 def test_matrix_exponentiation():
     print("\n--- Test funkcji matrix_exponentiation - potęgowanie macierzy ---")
     print("a^2 =", matrix_exponentiation(a, 2))
@@ -69,11 +62,6 @@ def test_matrix_exponentiation():
         print("b^2: ", matrix_exponentiation(b, 2))
     except Exception as e:
         print("Błąd dla b^2:", e)
-
-def test_matrix_rank():
-    print("\n--- Test funkcji matrix_rank - rząd macierzy ---")
-    print("rank(a) =", matrix_rank(a))
-    print("rank(b) =", matrix_rank(b))
 
 def test_determinant():
     print("\n--- Test funkcji matrix_determinant - wyznacznik macierzy ---")
@@ -98,9 +86,7 @@ def start_test():
     test_matrix_subtraction()
     test_matrix_by_matrix_multiplying()
     test_scalar_multiplying()
-    test_transponent_matrix()
     test_matrix_exponentiation()
-    test_matrix_rank()
     test_determinant()
     test_trace()
 start_test()

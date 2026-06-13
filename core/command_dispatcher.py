@@ -94,7 +94,7 @@ class CommandDispatcher:
         actual_count = len(command.arguments)
 
         if actual_count != expected_count:
-            raise ValueError(
+            return ValueError(
                 f"Operacja '{command.operation}' wymaga "
                 f"{expected_count} argumentów, otrzymano: {actual_count}."
             )

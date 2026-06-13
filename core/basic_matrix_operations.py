@@ -26,7 +26,7 @@ def matrix_addition(macierz1, macierz2):
     """
 
     if not is_dimension_match(macierz1, macierz2):
-        raise ValueError("Macierze muszą mieć ten sam rozmiar, aby można je było dodać.")
+        return ValueError("Macierze muszą mieć ten sam rozmiar, aby można je było dodać.")
 
     return macierz1 + macierz2
 
@@ -37,7 +37,7 @@ def matrix_subtraction(macierz1, macierz2):
     """
 
     if not is_dimension_match(macierz1, macierz2):
-        raise ValueError("Macierze muszą mieć ten sam rozmiar, aby można je było odjąć.")
+        return ValueError("Macierze muszą mieć ten sam rozmiar, aby można je było odjąć.")
 
     return macierz1 - macierz2
 
@@ -48,7 +48,7 @@ def matrix_by_matrix_multiplying(macierz1, macierz2):
     """
 
     if not is_dimension_match(macierz1, macierz2):
-        raise ValueError("Macierze muszą mieć ten sam rozmiar, aby można je było mnożyć.")
+        return ValueError("Macierze muszą mieć ten sam rozmiar, aby można je było mnożyć.")
 
     return macierz1 * macierz2
 
@@ -58,7 +58,7 @@ def scalar_multiplying(macierz, skalar):
     """
 
     if not isinstance(skalar, (int, float)):
-        raise ValueError("Skalar musi być liczbą całkowitą lub zmiennoprzecinkową.")
+        return ValueError("Skalar musi być liczbą całkowitą lub zmiennoprzecinkową.")
 
     return macierz * skalar
 
@@ -76,10 +76,10 @@ def matrix_exponentiation(macierz, potega):
     """
 
     if not is_square_matrix(macierz):
-        raise ValueError("Macierz musi być kwadratowa, aby można ją było podnieść do potęgi.")
+        return ValueError("Macierz musi być kwadratowa, aby można ją było podnieść do potęgi.")
 
     if not isinstance(potega, int) or potega < 0:
-        raise ValueError("Potęga musi być nieujemną liczbą całkowitą.")
+        return ValueError("Potęga musi być nieujemną liczbą całkowitą.")
 
     return macierz ** potega
 

@@ -1,12 +1,14 @@
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QLabel, QWidget, QVBoxLayout, QLineEdit,
-    QPushButton, QTextEdit )
+    QPushButton, QTextEdit
+)
 from PySide6.QtCore import Qt
 
 from core.command_dispatcher import execute_command
-from core.matrix_formatter import format_result 
+from core.matrix_formatter import format_result
 from gui.input_box import InputBox
 from gui.result_view import ResultView
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
