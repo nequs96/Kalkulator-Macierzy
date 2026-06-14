@@ -1,4 +1,4 @@
-
+import unittest
 from sympy import I as j, Rational, Matrix
 
 from core.advanced_matrix_operations import (
@@ -10,7 +10,7 @@ from core.advanced_matrix_operations import (
                                              has_complex_eigenvalues
                                             )
 
-class TestInverse_EigenOperations:
+class TestInverse_EigenOperations(unittest.TestCase):
     """
     Testy kodu dla funkcji związanych z macierzami odwracalnymi, wartościami własnymi, 
     wektorami własnymi i diagonalizacją.
@@ -48,7 +48,7 @@ class TestInverse_EigenOperations:
         assert results[1][2] == [create_matrix([[1], [0]])]
 
 
-class TestDiagonalization:
+class TestDiagonalization(unittest.TestCase):
     """
     Testy kodu dla funkcji związanych z diagonalizacją macierzy i sprawdzaniem, 
     czy macierz ma zespolone wartości własne.
