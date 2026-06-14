@@ -80,3 +80,32 @@ class TestDiagonalization(unittest.TestCase):
     def test_has_no_complex_eigenvalues(self):
         assert has_complex_eigenvalues(self.diagonal_matrix) == False
 
+    def test_diagonalization_into_formatter(self):
+        """
+        Test sprawdzający, czy wynik diagonalizacji może być obsłużony przez formatter.
+        """
+
+        result = diagonalize_matrix(self.diagonalizable_matrix)
+        assert isinstance(result, dict)
+
+        assert "D" in result
+        assert "P" in result
+        assert "P_inverse" in result
+        assert "description" in result
+
+        assert isinstance(result["D"], Matrix)
+        assert isinstance(result["P"], Matrix)
+        assert isinstance(result["P_inverse"], Matrix)
+        assert result["description"] == "A = P*D*P^(-1)"
+
+    def test_dispatcher(self):
+        """
+        Test sprawdzający, czy wszystkie funkcje są poprawnie zdefiniowane i mogą być wywołane.
+        """
+        
+        assert callable(create_matrix)
+        assert callable(inverse_matrix)
+        assert callable(matrix_eigenvalues)
+        assert callable(matrix_eigenvectors)
+        assert callable(diagonalize_matrix)
+        assert callable(has_complex_eigenvalues)
