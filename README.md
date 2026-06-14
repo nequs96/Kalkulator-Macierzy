@@ -23,3 +23,9 @@ python main.py
 Testy można uruchomić z poziomu Visual Studio Code przez moduł testowania albo z terminala poleceniem:
 
 python -m unittest discover -s tests -p "test_*.py" -v
+
+UWAGA: program obługuje dwa formaty podawania macierzy
+
+1: np det([1,2],[1,2])
+
+2: det([[1,2],[1,2]])

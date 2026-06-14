@@ -72,11 +72,17 @@ class CommandParser:
         """
         Obsługuje skrócony zapis macierzy dla operacji jednoargumentowych.
 
-        Przykład:
+        Przykłady:
         det([1, 2], [1, 6])
+        det((1, 2), (1, 6))
 
-        zostanie potraktowane jak:
+        zostaną potraktowane jak:
         det([[1, 2], [1, 6]])
+
+        Dodatkowo zapis:
+        det(((1, 2), (1, 6)))
+
+        również zostanie potraktowany jako jedna macierz.
         """
 
         one_matrix_operations = {
@@ -101,8 +107,10 @@ class CommandParser:
 
         for argument in arguments:
             if isinstance(argument, Matrix):
-                if argument.rows == 1 or argument.cols == 1:
-                    rows.append(list(argument))
+                if argument.rows == 1:
+                    rows.append(list(argument.row(0)))
+                elif argument.cols == 1:
+                    rows.append(list(argument.col(0)))
                 else:
                     return arguments
 
@@ -221,7 +229,8 @@ class CommandParser:
                 f"Niepoprawna składnia argumentu: {argument_text}"
             ) from error
 
-        if isinstance(parsed_argument, list):
+        
+        if isinstance(parsed_argument, (list, tuple)):
             return Matrix(parsed_argument)
 
         if isinstance(parsed_argument, (int, float)):
