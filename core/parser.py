@@ -67,6 +67,62 @@ class CommandParser:
             "zespolone_wartosci_wlasne": "complex_eigenvalues",
             "zespolone_wartości_własne": "complex_eigenvalues",
         }
+    
+    def normalize_short_matrix_format(self, operation, arguments):
+        """
+        Obsługuje skrócony zapis macierzy dla operacji jednoargumentowych.
+
+        Przykład:
+        det([1, 2], [1, 6])
+
+        zostanie potraktowane jak:
+        det([[1, 2], [1, 6]])
+        """
+
+        one_matrix_operations = {
+            "det",
+            "rank",
+            "transpose",
+            "trace",
+            "inverse",
+            "eigenvalues",
+            "eigenvectors",
+            "diagonalize",
+            "complex_eigenvalues"
+        }
+
+        if operation not in one_matrix_operations:
+            return arguments
+
+        if len(arguments) <= 1:
+            return arguments
+
+        rows = []
+
+        for argument in arguments:
+            if isinstance(argument, Matrix):
+                if argument.rows == 1 or argument.cols == 1:
+                    rows.append(list(argument))
+                else:
+                    return arguments
+
+            elif isinstance(argument, (list, tuple)):
+                if all(not isinstance(element, (list, tuple, Matrix)) for element in argument):
+                    rows.append(list(argument))
+                else:
+                    return arguments
+
+            else:
+                return arguments
+
+        row_lengths = [len(row) for row in rows]
+
+        if len(set(row_lengths)) != 1:
+            return arguments
+
+        return [Matrix(rows)]
+    
+
 
     def parse(self, command_text: str) -> ParsedCommand:
         command_text = command_text.strip()
@@ -83,6 +139,8 @@ class CommandParser:
         for raw_argument in raw_arguments:
             parsed_argument = self._parse_argument(raw_argument)
             arguments.append(parsed_argument)
+
+        arguments = self.normalize_short_matrix_format(operation, arguments)
 
         return ParsedCommand(
             operation=operation,
