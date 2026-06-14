@@ -1,5 +1,6 @@
 from sympy import Matrix
 from sympy import Basic
+import unittest
 from core.basic_matrix_operations import (  create_matrix,
                                             is_dimension_match,
                                             is_square_matrix,
@@ -11,7 +12,7 @@ from core.basic_matrix_operations import (  create_matrix,
                                             matrix_determinant,
                                             matrix_trace
                                         )
-class TestBasicMatrixOperations():
+class TestBasicMatrixOperations(unittest.TestCase):
     a = create_matrix([[4, 2], [1, 3]]) #poprawne wyniki dla wszystkich funkcji poniżej
     b = create_matrix([[1, 2, 0], [0, 1, 0], [1, 1, 1], [2, 2, 2]]) #niepoprawne wyniki dla większości funkcji, ponieważ macierz b nie jest kwadratowa i ma inne wymiary niż macierz a
     """Testy kodu dla macierzy a i b:"""
