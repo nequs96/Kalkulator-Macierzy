@@ -11,82 +11,61 @@ from core.basic_matrix_operations import (  create_matrix,
                                             matrix_determinant,
                                             matrix_trace
                                         )
+class TestBasicMatrixOperations():
+    a = create_matrix([[4, 2], [1, 3]]) #poprawne wyniki dla wszystkich funkcji poniżej
+    b = create_matrix([[1, 2, 0], [0, 1, 0], [1, 1, 1], [2, 2, 2]]) #niepoprawne wyniki dla większości funkcji, ponieważ macierz b nie jest kwadratowa i ma inne wymiary niż macierz a
+    """Testy kodu dla macierzy a i b:"""
 
-a = create_matrix([[4, 2], [1, 3]]) #poprawne wyniki dla wszystkich funkcji poniżej
-b = create_matrix([[1, 2, 0], [0, 1, 0], [1, 1, 1], [2, 2, 2]]) #niepoprawne wyniki dla większości funkcji, ponieważ macierz b nie jest kwadratowa i ma inne wymiary niż macierz a
-print("\n Przykładowe działanie kodu dla macierzy a i b:", a, b)
+    def test_is_dimension_match(self):
+        """Test funkcji is_dimension_match - czy macierze mają takie same wymiary"""
+        assert is_dimension_match(self.a, self.a) == True
+        assert is_dimension_match(self.a, self.b) == False
 
-def test_is_dimension_match():
-    print("\n--- Test funkcji is_dimension_match - czy macierze mają takie same wymiary ---")
-    print("a - a:", is_dimension_match(a, a))
-    print("a - b:", is_dimension_match(a, b))
+    def test_is_square_matrix(self):
+        """Test funkcji is_square_matrix - czy macierz jest kwadratowa"""
+        assert is_square_matrix(self.a) == True
+        assert is_square_matrix(self.b) == False
 
-def test_is_square_matrix():
-    print("\n--- Test funkcji is_square_matrix - czy macierz jest kwadratowa ---")
-    print("a jest kwadratowa:", is_square_matrix(a))
-    print("b jest kwadratowa:", is_square_matrix(b))
+    def test_matrix_addition(self):
+        """Test funkcji matrix_addition - dodawanie macierzy"""
+        assert matrix_addition(self.a, self.a) == create_matrix([[8, 4], [2, 6]])
+        assert isinstance(matrix_addition(self.a, self.b), ValueError)
+        assert str(matrix_addition(self.a, self.b)) == "Macierze muszą mieć ten sam rozmiar, aby można je było dodać."
 
-def test_matrix_addition():
-    print("\n--- Test funkcji matrix_addition - dodawanie macierzy ---")
-    print("a + a =", matrix_addition(a, a))
-    try:
-        print("b + b =", matrix_addition(b, b))
-    except Exception as e:
-        print("Błąd dla b + b:", e)
+    def test_matrix_subtraction(self):
+        """Test funkcji matrix_subtraction - odejmowanie macierzy"""
+        assert matrix_subtraction(self.a, self.a) == create_matrix([[0, 0], [0, 0]])
+        assert isinstance(matrix_subtraction(self.a, self.b), ValueError)
+        assert str(matrix_subtraction(self.a, self.b)) == "Macierze muszą mieć ten sam rozmiar, aby można je było odjąć."
 
-def test_matrix_subtraction():
-    print("\n--- Test funkcji matrix_subtraction - odejmowanie macierzy ---")
-    print("a - a =", matrix_subtraction(a, a))
-    try:
-        print("b - b =", matrix_subtraction(b, b))
-    except Exception as e:
-        print("Błąd dla b - b:", e)
+    def test_matrix_by_matrix_multiplying(self):
+        """Test funkcji matrix_by_matrix_multiplying - mnożenie macierzy"""
+        assert matrix_by_matrix_multiplying(self.a, self.a) == create_matrix([[18, 14], [7, 11]])
+        assert isinstance(matrix_by_matrix_multiplying(self.a, self.b), ValueError)
+        assert str(matrix_by_matrix_multiplying(self.a, self.b)) == "Macierze muszą mieć ten sam rozmiar, aby można je było mnożyć."
 
-def test_matrix_by_matrix_multiplying():
-    print("\n--- Test funkcji matrix_by_matrix_multiplying - mnożenie macierzy ---")
-    print("a * a =", matrix_by_matrix_multiplying(a, a))
-    try:
-        print("b * b: ", matrix_by_matrix_multiplying(b, b))
-    except Exception as e:
-        print("Błąd dla b * b:", e)
+    def test_scalar_multiplying(self):
+        """Test funkcji scalar_multiplying - mnożenie macierzy przez liczbę"""
+        assert scalar_multiplying(self.a, 2) == create_matrix([[8, 4], [2, 6]])
+        zt = scalar_multiplying(self.a, "abc")  # zły typ
+        assert isinstance(zt, ValueError)
+        assert str(zt) == "Skalar musi być liczbą całkowitą lub zmiennoprzecinkową."
 
-def test_scalar_multiplying():
-    print("\n--- Test funkcji scalar_multiplying - mnożenie macierzy przez liczbę ---")
-    print("a * 2 =", scalar_multiplying(a, 2))
-    print("b * 2 =", scalar_multiplying(b, 2))
+    def test_matrix_exponentiation(self):
+        """Test funkcji matrix_exponentiation - potęgowanie macierzy"""
+        assert matrix_exponentiation(self.a, 2) == create_matrix([[18, 14], [7, 11]])
+        assert isinstance(matrix_exponentiation(self.b, 2), ValueError)
+        assert str(matrix_exponentiation(self.b, 2)) == "Macierz musi być kwadratowa, aby można ją było podnieść do potęgi."
 
-def test_matrix_exponentiation():
-    print("\n--- Test funkcji matrix_exponentiation - potęgowanie macierzy ---")
-    print("a^2 =", matrix_exponentiation(a, 2))
-    try:
-        print("b^2: ", matrix_exponentiation(b, 2))
-    except Exception as e:
-        print("Błąd dla b^2:", e)
+    def test_determinant(self):
+        """Test funkcji matrix_determinant - wyznacznik macierzy"""
+        assert matrix_determinant(self.a) == 10
+        assert isinstance(matrix_determinant(self.b), ValueError)
+        assert str(matrix_determinant(self.b)) == "Macierz musi być kwadratowa, aby można było obliczyć jej wyznacznik."
 
-def test_determinant():
-    print("\n--- Test funkcji matrix_determinant - wyznacznik macierzy ---")
-    print("det(a) =", matrix_determinant(a))
-    try:
-        print("det(b):", matrix_determinant(b))
-    except Exception as e:
-        print("Błąd dla det(b):", e)
+    def test_trace(self):
+        """Test funkcji matrix_trace - ślad macierzy"""
+        assert matrix_trace(self.a) == 7
+        assert isinstance(matrix_trace(self.b), ValueError)
+        assert str(matrix_trace(self.b)) == "Macierz musi być kwadratowa, aby można było obliczyć jej ślad."
 
-def test_trace():
-    print("\n--- Test funkcji matrix_trace - ślad macierzy ---")
-    print("trace(a) =", matrix_trace(a))
-    try:
-        print("trace(b)", matrix_trace(b))
-    except Exception as e:
-        print("Błąd dla trace(b):", e)
-
-def start_test():
-    test_is_dimension_match()
-    test_is_square_matrix()
-    test_matrix_addition()
-    test_matrix_subtraction()
-    test_matrix_by_matrix_multiplying()
-    test_scalar_multiplying()
-    test_matrix_exponentiation()
-    test_determinant()
-    test_trace()
-start_test()
