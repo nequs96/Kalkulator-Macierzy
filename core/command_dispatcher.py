@@ -128,3 +128,4 @@ def execute_command(command_text: str):
     parsed_command = parser.parse(command_text)
 
     return dispatcher.dispatch(parsed_command)
+
