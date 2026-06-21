@@ -8,7 +8,7 @@ class ResultView(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
 
         self.result_title = QLabel("Wynik: ")
-        self.result_title.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        self.result_title.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
         layout.addWidget(self.result_title)
 
         self.result_display = QTextEdit()

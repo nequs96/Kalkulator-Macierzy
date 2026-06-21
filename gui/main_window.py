@@ -21,7 +21,7 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(widget)
 
         label1 = QLabel("Kalkulator Macierzy")
-        label1.setAlignment(Qt.AlignTop | Qt.AlignHCenter)
+        label1.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignHCenter)
         layout.addWidget(label1)
 
         self.input_section = InputBox()
@@ -38,13 +38,18 @@ class MainWindow(QMainWindow):
     def handle_calculate(self):
         command = self.input_section.inputbox.text()
         
-        if not command.strip():
-            return
+        try:
+            raw = execute_command(command)
+            formatted = format_result(raw)
+            
+            history_entry = f">>> {command}\n{formatted}\n{'-'*30}"
+            
+        except Exception as e:
+            history_entry = f">>> {command}\n[!] BŁĄD: {str(e)}\n{'-'*30}"
         
-        raw = execute_command(command)
-        formatted = format_result(raw)
+        self.result_section.result_display.append(history_entry)
         
-        self.result_section.result_display.setText(formatted)
+        self.input_section.inputbox.clear()
 
     def handle_clear(self):
         self.input_section.inputbox.clear()

@@ -10,8 +10,8 @@ class InputBox(QWidget):
         self.examples = QLabel("""
             det (wyznacznik) 
             add (dodawanie) 
-            tr (slad)""")
-        self.examples.setAlignment(Qt.AlignLeft)
+            trace (slad)""")
+        self.examples.setAlignment(Qt.AlignmentFlag.AlignLeft)
         layout.addWidget(self.examples)
 
         self.inputbox = QLineEdit()
