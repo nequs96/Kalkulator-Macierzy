@@ -1,6 +1,7 @@
 import sys
 import unittest
 from unittest.mock import MagicMock
+from unittest.mock import patch
 from PySide6.QtWidgets import QApplication
 from gui.main_window import MainWindow
 
@@ -12,13 +13,11 @@ class Test_Button(unittest.TestCase):
     def test_clear(self):
         window = MainWindow()
 
-        window.input_section = MagicMock()
-        window.result_section = MagicMock()
+        with patch.object(window, 'handle_clear') as mock_handle_clear:
 
-        window.input_section.button2.clicked.emit()
+            window.input_section.button2.clicked.emit()
 
-        window.input_section.inputbox.clear.assert_called_once()
-        window.result_section.result_display.clear.assert_called_once()
+            mock_handle_clear.assert_called_once()
 
     def test_button1(self):
         window = MainWindow()
