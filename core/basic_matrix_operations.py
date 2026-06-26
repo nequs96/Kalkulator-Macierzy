@@ -1,5 +1,6 @@
 from sympy import Matrix
 from sympy import Basic
+import numpy as np
 
 def create_matrix(data):
     """
@@ -43,7 +44,18 @@ def matrix_subtraction(macierz1, macierz2):
 
 def matrix_by_matrix_multiplying(macierz1, macierz2):
     """
-    Mnoży dwie macierze i zwraca wynik, jeżeli mają odpowiednie wymiary.
+    Klasyczny iloczyn macierzy; mnoży dwie macierze i zwraca wynik, jeżeli mają odpowiednie wymiary.
+    W przeciwnym razie zgłasza błąd.
+    """
+
+    if not is_dimension_match(macierz1, macierz2):
+        return ValueError("Macierze muszą mieć ten sam rozmiar, aby można je było mnożyć.")
+
+    return macierz1 @ macierz2
+
+def matrix_by_matrix_multiplying_Hadamarda(macierz1, macierz2):
+    """
+    Obsługuje mnożenie macierzy element po elemencie, jeżeli mają odpowiednie wymiary.
     W przeciwnym razie zgłasza błąd.
     """
 
@@ -71,15 +83,30 @@ def transponent_matrix(macierz):
 
 def matrix_exponentiation(macierz, potega):
     """
-    Podnosi macierz do potęgi i zwraca wynik, jeżeli macierz jest kwadratowa.
-    W przeciwnym razie zgłasza błąd.
+    Podnosi macierz do potęgi w sensie algebraicznym, tzn.
+    wykonuje wielokrotne mnożenie macierzy przez samą siebie.
+    Aby to było możliwe, macierz musi być kwadratowa, potega musi być liczbą całkowitą. 
+    Jezeli potega jest ujemna, macierz musi być odwracalna.
     """
 
     if not is_square_matrix(macierz):
-        return ValueError("Macierz musi być kwadratowa, aby można ją było podnieść do potęgi.")
+        return ValueError("Macierz musi być kwadratowa, aby można ją było podnieść do potęgi 'macierzowej'.")
 
-    if not isinstance(potega, int) or potega < 0:
-        return ValueError("Potęga musi być nieujemną liczbą całkowitą.")
+    if not isinstance(potega, int):
+        return TypeError("Potęga macierzy musi być liczbą całkowitą typu int.")
+
+    if potega < 0:
+        if np.linalg.det(macierz) == 0:
+            return ValueError("Jeśli potęga jest ujemna, to macierz musi być niesingularna. ")
+
+    return np.linalg.matrix_power(macierz, potega)
+
+
+def elementwise_matrix_exponentiation(macierz, potega):
+    """
+    Podnosi macierz do potęgi (element po elemencie) i zwraca wynik, jeżeli macierz jest kwadratowa.
+    W przeciwnym razie zgłasza błąd.
+    """
 
     return macierz ** potega
 

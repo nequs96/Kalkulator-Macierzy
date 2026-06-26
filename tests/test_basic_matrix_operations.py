@@ -7,6 +7,7 @@ from core.basic_matrix_operations import (  create_matrix,
                                             matrix_addition,
                                             matrix_subtraction,
                                             matrix_by_matrix_multiplying,
+                                            matrix_by_matrix_multiplying_Hadamarda,
                                             scalar_multiplying,
                                             matrix_exponentiation,
                                             matrix_determinant,
@@ -45,6 +46,12 @@ class TestBasicMatrixOperations(unittest.TestCase):
         assert isinstance(matrix_by_matrix_multiplying(self.a, self.b), ValueError)
         assert str(matrix_by_matrix_multiplying(self.a, self.b)) == "Macierze muszą mieć ten sam rozmiar, aby można je było mnożyć."
 
+    def test_matrix_by_matrix_multiplying_Hadamarda(self):
+            """Test funkcji matrix_by_matrix_multiplying_Hadamarda - mnożenie macierzy element po elemencie"""
+            assert matrix_by_matrix_multiplying_Hadamarda(self.a, self.a) == create_matrix([[18, 14], [7, 11]])
+            assert isinstance(matrix_by_matrix_multiplying_Hadamarda(self.a, self.b), ValueError)
+            assert str(matrix_by_matrix_multiplying_Hadamarda(self.a, self.b)) == "Macierze muszą mieć ten sam rozmiar, aby można je było mnożyć."
+
     def test_scalar_multiplying(self):
         """Test funkcji scalar_multiplying - mnożenie macierzy przez liczbę"""
         assert scalar_multiplying(self.a, 2) == create_matrix([[8, 4], [2, 6]])
@@ -53,10 +60,14 @@ class TestBasicMatrixOperations(unittest.TestCase):
         assert str(zt) == "Skalar musi być liczbą całkowitą lub zmiennoprzecinkową."
 
     def test_matrix_exponentiation(self):
-        """Test funkcji matrix_exponentiation - potęgowanie macierzy"""
+        """Test funkcji matrix_exponentiation - potęgowanie macierzy (macierz @ macierz ...)"""
         assert matrix_exponentiation(self.a, 2) == create_matrix([[18, 14], [7, 11]])
         assert isinstance(matrix_exponentiation(self.b, 2), ValueError)
-        assert str(matrix_exponentiation(self.b, 2)) == "Macierz musi być kwadratowa, aby można ją było podnieść do potęgi."
+        assert str(matrix_exponentiation(self.b, 2)) == "Macierz musi być kwadratowa, aby można ją było podnieść do potęgi 'macierzowej'."
+        assert isinstance(matrix_exponentiation(self.a, 2.5), ValueError)
+        assert str(matrix_exponentiation(self.a, 2.5)) == "Potęga musi być liczbą całkowitą typu int."  
+        assert isinstance(matrix_exponentiation(self.a, -1), ValueError)
+        assert str(matrix_exponentiation(self.a, -1)) == "Jeśli potęga jest ujemna, to macierz musi być niesingularna."
 
     def test_determinant(self):
         """Test funkcji matrix_determinant - wyznacznik macierzy"""
