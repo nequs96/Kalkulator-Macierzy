@@ -1,74 +1,74 @@
+"""Parsowanie tekstowych komend użytkownika na operacje macierzowe."""
+
 from dataclasses import dataclass
 import ast
 import re
+from typing import Any
 
 from sympy import Matrix
 
 
 @dataclass
 class ParsedCommand:
+    """Dane sparsowanej komendy użytkownika."""
+
     operation: str
-    arguments: list
+    arguments: list[Any]
     raw_text: str
 
 
 class CommandParser:
+    """Parser zamieniający tekst użytkownika na strukturę ParsedCommand."""
+
     def __init__(self) -> None:
+        """Tworzy parser i definiuje aliasy obsługiwanych operacji."""
         self.operation_aliases = {
             "det": "det",
             "wyznacznik": "det",
-
             "rank": "rank",
             "rzad": "rank",
             "rząd": "rank",
-
             "transpose": "transpose",
             "transpozycja": "transpose",
-
             "multiply": "multiply",
             "mnozenie": "multiply",
             "mnożenie": "multiply",
-
             "add": "add",
             "dodaj": "add",
             "dodawanie": "add",
-
             "subtract": "subtract",
             "odejmij": "subtract",
             "odejmowanie": "subtract",
-
             "scalar_multiply": "scalar_multiply",
             "mnozenie_przez_skalar": "scalar_multiply",
             "mnożenie_przez_skalar": "scalar_multiply",
-
             "power": "power",
             "potega": "power",
             "potęga": "power",
-
             "trace": "trace",
+            "tr": "trace",
             "slad": "trace",
             "ślad": "trace",
-
             "inverse": "inverse",
             "odwrotna": "inverse",
-
             "eigenvalues": "eigenvalues",
             "wartosci_wlasne": "eigenvalues",
             "wartości_własne": "eigenvalues",
-
             "eigenvectors": "eigenvectors",
             "wektory_wlasne": "eigenvectors",
             "wektory_własne": "eigenvectors",
-
             "diagonalize": "diagonalize",
             "diagonalizacja": "diagonalize",
-
             "complex_eigenvalues": "complex_eigenvalues",
             "zespolone_wartosci_wlasne": "complex_eigenvalues",
             "zespolone_wartości_własne": "complex_eigenvalues",
         }
-    
-    def normalize_short_matrix_format(self, operation, arguments):
+
+    def normalize_short_matrix_format(
+        self,
+        operation: str,
+        arguments: list[Any],
+    ) -> list[Any]:
         """
         Obsługuje skrócony zapis macierzy dla operacji jednoargumentowych.
 
@@ -84,7 +84,6 @@ class CommandParser:
 
         również zostanie potraktowany jako jedna macierz.
         """
-
         one_matrix_operations = {
             "det",
             "rank",
@@ -94,7 +93,7 @@ class CommandParser:
             "eigenvalues",
             "eigenvectors",
             "diagonalize",
-            "complex_eigenvalues"
+            "complex_eigenvalues",
         }
 
         if operation not in one_matrix_operations:
@@ -115,7 +114,10 @@ class CommandParser:
                     return arguments
 
             elif isinstance(argument, (list, tuple)):
-                if all(not isinstance(element, (list, tuple, Matrix)) for element in argument):
+                if all(
+                    not isinstance(element, (list, tuple, Matrix))
+                    for element in argument
+                ):
                     rows.append(list(argument))
                 else:
                     return arguments
@@ -129,10 +131,9 @@ class CommandParser:
             return arguments
 
         return [Matrix(rows)]
-    
-
 
     def parse(self, command_text: str) -> ParsedCommand:
+        """Parsuje tekst komendy użytkownika do obiektu ParsedCommand."""
         command_text = command_text.strip()
 
         if not command_text:
@@ -157,6 +158,7 @@ class CommandParser:
         )
 
     def _split_command(self, command_text: str) -> tuple[str, str]:
+        """Oddziela nazwę operacji od tekstu argumentów."""
         pattern = r"^([a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ_]+)\((.*)\)$"
         match = re.match(pattern, command_text)
 
@@ -172,6 +174,7 @@ class CommandParser:
         return operation_name, arguments_text
 
     def _normalize_operation(self, operation_name: str) -> str:
+        """Zamienia nazwę operacji lub alias na nazwę kanoniczną."""
         operation_name = operation_name.strip().lower()
 
         if operation_name not in self.operation_aliases:
@@ -180,6 +183,7 @@ class CommandParser:
         return self.operation_aliases[operation_name]
 
     def _split_arguments(self, arguments_text: str) -> list[str]:
+        """Dzieli tekst argumentów na osobne argumenty komendy."""
         arguments = []
         current_argument = []
         bracket_level = 0
@@ -217,7 +221,8 @@ class CommandParser:
 
         return arguments
 
-    def _parse_argument(self, argument_text: str):
+    def _parse_argument(self, argument_text: str) -> Matrix | int | float:
+        """Zamienia tekst argumentu na macierz albo liczbę."""
         try:
             parsed_argument = ast.literal_eval(argument_text)
         except ValueError as error:
@@ -229,7 +234,6 @@ class CommandParser:
                 f"Niepoprawna składnia argumentu: {argument_text}"
             ) from error
 
-        
         if isinstance(parsed_argument, (list, tuple)):
             return Matrix(parsed_argument)
 

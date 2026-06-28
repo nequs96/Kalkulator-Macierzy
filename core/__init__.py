@@ -1,0 +1,1 @@
+"""Pakiet zawierający logikę kalkulatora macierzy."""

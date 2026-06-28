@@ -1,10 +1,17 @@
+"""Obsługa wykonywania komend użytkownika."""
+
+from typing import Any
+
 from core.parser import CommandParser, ParsedCommand
 import core.basic_matrix_operations as basic_operations
 import core.advanced_matrix_operations as advanced_operations
 
 
 class CommandDispatcher:
+    """Klasa wybierająca odpowiednią operację na podstawie komendy."""
+
     def __init__(self) -> None:
+        """Inicjalizuje słownik oczekiwanej liczby argumentów dla operacji."""
         self.expected_arguments_count = {
             "det": 1,
             "rank": 1,
@@ -15,7 +22,6 @@ class CommandDispatcher:
             "eigenvectors": 1,
             "diagonalize": 1,
             "complex_eigenvalues": 1,
-
             "add": 2,
             "subtract": 2,
             "multiply": 2,
@@ -23,7 +29,8 @@ class CommandDispatcher:
             "power": 2,
         }
 
-    def dispatch(self, command: ParsedCommand):
+    def dispatch(self, command: ParsedCommand) -> Any:
+        """Wykonuje operację odpowiadającą sparsowanej komendzie."""
         self._validate_arguments_count(command)
 
         operation = command.operation
@@ -85,7 +92,11 @@ class CommandDispatcher:
 
         raise ValueError(f"Nieobsługiwana operacja: {operation}")
 
-    def _validate_arguments_count(self, command: ParsedCommand) -> None:
+    def _validate_arguments_count(
+        self,
+        command: ParsedCommand,
+    ) -> None | ValueError:
+        """Sprawdza, czy komenda ma poprawną liczbę argumentów."""
         expected_count = self.expected_arguments_count.get(command.operation)
 
         if expected_count is None:
@@ -99,7 +110,10 @@ class CommandDispatcher:
                 f"{expected_count} argumentów, otrzymano: {actual_count}."
             )
 
-    def _dispatch_scalar_multiply(self, arguments: list):
+        return None
+
+    def _dispatch_scalar_multiply(self, arguments: list[Any]) -> Any:
+        """Obsługuje mnożenie macierzy przez skalar."""
         first_argument = arguments[0]
         second_argument = arguments[1]
 
@@ -117,15 +131,16 @@ class CommandDispatcher:
 
         return basic_operations.scalar_multiplying(matrix, scalar)
 
-    def _is_matrix(self, value) -> bool:
+    def _is_matrix(self, value: Any) -> bool:
+        """Sprawdza, czy podana wartość zachowuje się jak macierz."""
         return hasattr(value, "rows") and hasattr(value, "cols")
 
 
-def execute_command(command_text: str):
+def execute_command(command_text: str) -> Any:
+    """Parsuje tekst komendy i wykonuje odpowiednią operację."""
     parser = CommandParser()
     dispatcher = CommandDispatcher()
 
     parsed_command = parser.parse(command_text)
 
     return dispatcher.dispatch(parsed_command)
-

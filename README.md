@@ -4,22 +4,29 @@ Aplikacja okienkowa służąca do wykonywania podstawowych i bardziej zaawansowa
 
 Projekt tworzony jest w języku Python z wykorzystaniem bibliotek SymPy oraz PySide6.
 
-Instrukcja dla systemu windows: 
+---
 
-python -m venv .venv
-.venv\Scripts\activate
-pip install -r requirements.txt
+## 1. Cel projektu
 
-Instrukcja dla systemu Linux/MacOs:
+Celem projektu jest stworzenie prostej aplikacji graficznej, która pozwala użytkownikowi wykonywać obliczenia na macierzach bez konieczności ręcznego wpisywania kodu w interpreterze Pythona.
 
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+Projekt został wybrany, ponieważ działania na macierzach często pojawiają się na zajęciach z algebry liniowej, matematyki, informatyki oraz w różnych zastosowaniach technicznych. Aplikacja ma ułatwiać szybkie sprawdzanie wyników podstawowych i bardziej zaawansowanych operacji macierzowych.
 
-Aby uruchomic aplikacje, w głownym folderze projektu trzeba w terminalu wpisac:
+Program działa w trybie graficznym. Użytkownik wpisuje komendę w oknie aplikacji, a program analizuje polecenie, wykonuje odpowiednie obliczenie i wyświetla wynik.
 
-python main.py
+---
 
-Testy można uruchomić z poziomu Visual Studio Code przez moduł testowania albo z terminala poleceniem:
+## 2. Wykorzystane technologie i biblioteki
 
-python -m unittest discover -s tests -p "test_*.py" -v
+Projekt został napisany w języku Python.
+
+W projekcie wykorzystano następujące biblioteki:
+
+- `PySide6` — biblioteka użyta do stworzenia graficznego interfejsu użytkownika,
+- `SymPy` — biblioteka użyta do obliczeń symbolicznych i działań na macierzach,
+- `unittest` — moduł standardowy Pythona użyty do testów jednostkowych,
+- `pytest` — biblioteka dostępna w środowisku projektu, pomocna przy uruchamianiu testów.
+
+Lista wymaganych bibliotek znajduje się w pliku:
+
+requirements.txt

@@ -63,6 +63,7 @@ class TestDiagonalization(unittest.TestCase):
 
     def test_diagonalize_diagonalizable_matrix(self):
         results = diagonalize_matrix(self.diagonalizable_matrix)
+        assert isinstance(results, dict)
         assert results["D"] == create_matrix([[2, 0], [0, 3]])
         assert results["P"] == create_matrix([[1, 1], [0,1]])
         assert results["P_inverse"] == create_matrix([[1, -1], [0, 1]])

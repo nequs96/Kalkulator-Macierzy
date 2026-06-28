@@ -1,23 +1,37 @@
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QLabel
+"""Widżet pola wejściowego dla komend użytkownika."""
+
+from PySide6.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QLineEdit,
+    QPushButton,
+    QLabel,
+)
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
 
+
 class InputBox(QWidget):
-    def __init__(self):
+    """Widżet zawierający przykłady komend, pole wejściowe i przyciski."""
+
+    def __init__(self) -> None:
+        """Inicjalizuje pole wejściowe, przykłady komend i przyciski."""
         super().__init__()
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
 
         self.examples = QLabel("""
 det (wyznacznik)                           transpose (transpozycja)
-add (dodawanie)                            diagonalize (diagonalizacja)   
+add (dodawanie)                            diagonalize (diagonalizacja)
 trace (slad)                               eigenvalues (wartosci wlasne)
 eigenvectors (wektory wlasne)              complex_eigenvalues (zespolone wart. wlasne)
 subtract (odejmowanie)                     multiply(mnozenie)
 scalar_multiply (mnozenie przez skalar)    power (potegowanie)
-rank (rzad)                                inverse(odwracanie)""")    
+rank (rzad)                                inverse(odwracanie)""")
         self.examples.setAlignment(Qt.AlignmentFlag.AlignLeft)
         layout.addWidget(self.examples)
+
         font = QFont("Cascadia Code", 10)
         font.setStyleHint(QFont.StyleHint.Monospace)
         self.examples.setFont(font)

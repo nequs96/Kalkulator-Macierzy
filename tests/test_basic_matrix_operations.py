@@ -66,8 +66,10 @@ class TestBasicMatrixOperations(unittest.TestCase):
         assert str(matrix_exponentiation(self.b, 2)) == "Macierz musi być kwadratowa, aby można ją było podnieść do potęgi 'macierzowej'."
         assert isinstance(matrix_exponentiation(self.a, 2.5), ValueError)
         assert str(matrix_exponentiation(self.a, 2.5)) == "Potęga musi być liczbą całkowitą typu int."  
-        assert isinstance(matrix_exponentiation(self.a, -1), ValueError)
-        assert str(matrix_exponentiation(self.a, -1)) == "Jeśli potęga jest ujemna, to macierz musi być niesingularna."
+        assert isinstance(matrix_exponentiation(create_matrix([[1, 2], [2, 4]]), -1), ValueError)
+        assert str(matrix_exponentiation(create_matrix([[1, 2], [2, 4]]), -1)) == "Jeśli potęga jest ujemna, to macierz musi być niesingularna."
+
+
 
     def test_determinant(self):
         """Test funkcji matrix_determinant - wyznacznik macierzy"""

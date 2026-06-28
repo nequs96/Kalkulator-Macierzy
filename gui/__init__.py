@@ -1,0 +1,1 @@
+"""Pakiet zawierający elementy interfejsu graficznego aplikacji."""

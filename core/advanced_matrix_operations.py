@@ -1,8 +1,11 @@
-from sympy import Matrix
+"""Zaawansowane operacje na macierzach."""
+
+from sympy import Basic, Matrix
 
 from core.basic_matrix_operations import create_matrix, is_square_matrix
 
-def check_square(macierz, function_name):
+
+def check_square(macierz: Matrix, function_name: str) -> bool | ValueError:
     """
     Sprawdza, czy macierz jest kwadratowa w kontekście zadanej funkcji.
     """
@@ -12,7 +15,8 @@ def check_square(macierz, function_name):
     
     return True
 
-def is_invertible_matrix(macierz):
+
+def is_invertible_matrix(macierz: Matrix) -> bool:
     """
     Sprawdza, czy macierz jest odwracalna.
 
@@ -25,7 +29,8 @@ def is_invertible_matrix(macierz):
 
     return macierz.det() != 0
 
-def inverse_matrix(macierz):
+
+def inverse_matrix(macierz: Matrix) -> Matrix | ValueError:
     """
     Oblicza macierz odwrotną do zadanej, jeśli jest to możliwe.
     
@@ -41,7 +46,8 @@ def inverse_matrix(macierz):
     
     return macierz.inv()
 
-def matrix_eigenvalues(macierz):
+
+def matrix_eigenvalues(macierz: Matrix) -> dict[Basic, int]:
     """
     Oblicza wartości własne macierzy.
     Zwraca słownik, gdzie klucze to wartości własne, a wartości to ich algebraiczne krotności.
@@ -54,7 +60,8 @@ def matrix_eigenvalues(macierz):
     
     return macierz.eigenvals()
 
-def matrix_eigenvectors(macierz):
+
+def matrix_eigenvectors(macierz: Matrix) -> list[tuple[Basic, int, list[Matrix]]]:
     """
     Oblicza wektory własne macierzy.
     Zwraca listę w formacie [(wartość własna, algebraiczna krotność, [wektory własne])].
@@ -68,7 +75,8 @@ def matrix_eigenvectors(macierz):
     
     return macierz.eigenvects()
 
-def is_diagonalizable(macierz):
+
+def is_diagonalizable(macierz: Matrix) -> bool:
     """
     Sprawdza, czy macierz jest diagonalizowalna.
     Macierz jest diagonalizowalna, jeśli liczba liniowo niezależnych wektorów własnych
@@ -86,7 +94,8 @@ def is_diagonalizable(macierz):
         eigensum += len(vectors)
     return eigensum == macierz.rows
 
-def diagonalize_matrix(macierz):
+
+def diagonalize_matrix(macierz: Matrix) -> dict[str, Matrix | str] | ValueError:
     """
     Diagonalizuje macierz, jeśli jest to możliwe.
     Zwraca macierz diagonalną D, macierz przejścia P i macierz odwrotną P^-1, takie że A = PDP^-1.
@@ -112,7 +121,8 @@ def diagonalize_matrix(macierz):
         "description": "A = P*D*P^(-1)"
     }
 
-def has_complex_eigenvalues(macierz):
+
+def has_complex_eigenvalues(macierz: Matrix) -> bool:
     """
     Sprawdza, czy macierz ma wartości własne zespolone, jeżeli jest kwadratowa.
     W przeciwnym razie zgłasza błąd.

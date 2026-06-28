@@ -1,0 +1,1 @@
+"""Pakiet zawierający testy jednostkowe kalkulatora macierzy."""
