@@ -32,3 +32,5 @@ rank (rzad)                                inverse(odwracanie)""")
         buttons_layout.addWidget(self.button1)
         buttons_layout.addWidget(self.button2)
         layout.addLayout(buttons_layout)
+
+        self.inputbox.returnPressed.connect(self.button1.click)
